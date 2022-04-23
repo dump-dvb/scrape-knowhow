@@ -4,7 +4,7 @@
 
 Baseurl for documents: https://knowhow.vdv.de/documents/${INT}/
 
-example cURL to get the pdf:
+example cURL to get the pdf (copied from Firefox dev tools):
 
 ```sh
 curl 'https://knowhow.vdv.de/wp-admin/admin-post.php?action=serve_pdf&token=62637013c4106' \
@@ -20,3 +20,17 @@ curl 'https://knowhow.vdv.de/wp-admin/admin-post.php?action=serve_pdf&token=6263
   -H 'Sec-Fetch-Mode: cors' \
   -H 'Sec-Fetch-Site: same-origin' \
 ```
+
+In practice can be cut down to:
+
+```sh
+curl 'https://knowhow.vdv.de/wp-admin/admin-post.php?action=serve_pdf&token=62637013c4106'
+```
+
+Which still works on a different machine and from a different IP
+
+## Todo:
+
+- [ ] Figure out how token is generated
+- [ ] Figure out how token is invalidated (if ever)
+- [ ] backup the docs
