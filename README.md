@@ -31,13 +31,16 @@ Which still works on a different machine and from a different IP
 
 ## Crawling
 
-`curl 'https://knowhow.vdv.de/wp-json/wp/v2/documents?reduced=true&frontend&per_page=1000&page=1&filter%5Bnopaging%5D=true'`
+```
+curl 'https://knowhow.vdv.de/wp-json/wp/v2/documents?reduced=true&frontend&per_page=1000&page=1&filter%5Bnopaging%5D=true'
+```
 
-Returns all the metadata. You can find it in [./documents.json]
+Returns all the documents metadata. You can find it in [documents.json](./documents.json)
 
+## Token generation
 
-## Todo:
+```
+curl https://knowhow.vdv.de/wp-json/kh-tm/v1/document/${DOC_ID}?variant=lang-${LANG}_fulltext
+```
 
-- [ ] Figure out how token is generated
-- [ ] Figure out how token is invalidated (if ever)
-- [ ] backup the docs
+Returns JSON with status code and if 200, a token.
