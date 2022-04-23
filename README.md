@@ -29,6 +29,13 @@ curl 'https://knowhow.vdv.de/wp-admin/admin-post.php?action=serve_pdf&token=6263
 
 Which still works on a different machine and from a different IP
 
+## Crawling
+
+`curl 'https://knowhow.vdv.de/wp-json/wp/v2/documents?reduced=true&frontend&per_page=1000&page=1&filter%5Bnopaging%5D=true'`
+
+Returns all the metadata. You can find it in [./documents.json]
+
+
 ## Todo:
 
 - [ ] Figure out how token is generated
