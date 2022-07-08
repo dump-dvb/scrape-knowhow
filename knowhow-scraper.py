@@ -2,6 +2,7 @@
 import requests
 import json
 import sys
+import os
 import time
 
 pdf_base_url =  r'https://knowhow.vdv.de/wp-admin/admin-post.php?action=serve_pdf&token='
@@ -14,6 +15,13 @@ with open('documents.json', 'r') as f:
 
 for e in variant:
     for d in documents:
+        filename = d['doc_num'] + '_' + str(d['id']) + '_' +  d['title@de_DE_formal'][0:20] + e +  '.pdf'
+        filename = filename.replace(r'/', '_').replace(r'=', '-')
+
+        if os.path.exists(os.path.join(outdir, filename)):
+            print(f"Skipping: {filename}")
+            continue
+
         token_url = token_base_url + str(d['id']) + r'?' + e
         sys.stderr.write("ID {0}: Trying token at {1}\n".format(d['id'], token_url))
         r = requests.get(token_url)
@@ -24,7 +32,6 @@ for e in variant:
         else:
             sys.stderr.write("ID {0}: HTTP {1}\n".format(d['id'], r.status_code))
             r.close()
-            pass
 
         rpdf = requests.get(pdf_base_url + token)
         sys.stderr.write("ID {0}: HTTP {1}\n".format(d['id'], rpdf.status_code))
@@ -34,8 +41,6 @@ for e in variant:
             if 'application/octet-stream' in rpdf.headers.get('content-type'):
                 sys.stderr.write("ID {0}: Got octet-stream ^_^\n".format(d['id']))
                 if rpdf.content[1:4] == b"PDF":
-                    filename = d['doc_num'] + '_' + str(d['id']) + '_' +  d['title@de_DE_formal'][0:20] + e +  '.pdf'
-                    filename = filename.replace(r'/', '_').replace(r'=', '-')
                     with open(outdir + filename, 'wb') as outpdf:
                         outpdf.write(rpdf.content)
                         sys.stderr.write("ID {0}: wrote {1}\n".format(d['id'], outdir + filename))

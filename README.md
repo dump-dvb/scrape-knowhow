@@ -44,3 +44,9 @@ curl https://knowhow.vdv.de/wp-json/kh-tm/v1/document/${DOC_ID}?variant=lang-${L
 ```
 
 Returns JSON with status code and if 200, a token.
+
+## Import into Zotero
+
+This relies a lot on the code of [this github gist](https://gist.github.com/danbe/6547077).
+It uses the [debug-bridge plugin](https://github.com/retorquere/zotero-better-bibtex/tree/master/test/fixtures/debug-bridge) to import all the files with metadata into zotero.
+Execute `./zotero-import.py` after adjusting the password variable.
